@@ -1,5 +1,8 @@
 import React from 'react';
+
+
 import { useDispatch, useSelector } from 'react-redux';
+import { setFilter } from '../../redux/Contacts/contactsReducer';
 import css from './Filter.module.css';
 
 const Filter = () => {
@@ -7,11 +10,8 @@ const Filter = () => {
   const filter = useSelector(store => store.contacts.filter);
 
   const handleFilter = e => {
-    const action = {
-      type: 'contacts/setFilter',
-      payload: e.target.value,
-    };
-    dispatch(action);
+   
+    dispatch(setFilter(e.target.value));
   };
 
   return (
@@ -28,3 +28,7 @@ const Filter = () => {
 };
 
 export { Filter };
+
+
+
+

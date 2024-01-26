@@ -1,6 +1,7 @@
 import React from 'react';
 import css from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
+import { removeContact } from '../../redux/Contacts/contactsReducer';
 
 const ContactList = () => {
   const dispatch = useDispatch();
@@ -8,11 +9,8 @@ const ContactList = () => {
   const filter = useSelector(store => store.contacts.filter);
 
   const handleDeleteContact = id => {
-    const action = {
-      type: 'contacts/removeContact',
-      payload: id,
-    };
-    dispatch(action);
+    
+    dispatch(removeContact(id));
   };
 
   const filteredContacts = Array.isArray(contacts)

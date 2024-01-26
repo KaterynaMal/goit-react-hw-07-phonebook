@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { nanoid } from 'nanoid';
+// import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
+import { addContact } from '../../redux/Contacts/contactsReducer';
+
 import css from './ContactForm.module.css';
 
 const ContactForm = () => {
@@ -18,7 +20,7 @@ const ContactForm = () => {
     setNumber(e.target.value);
   };
 
-  const handleAddContact = () => {
+  const handleAddContact = async () => {
     if (name.trim() === '' || number.trim() === '') {
       alert('Please, enter name and phone number');
       return;
@@ -36,19 +38,20 @@ const ContactForm = () => {
     }
 
     const newContact = {
-      id: nanoid(),
+      // id: nanoid(),
       name: name.trim(),
       number: number.trim(),
     };
 
-    const action = {
-      type: 'contacts/addContact',
-      payload: newContact,
-    };
-    dispatch(action);
-
-    setName('');
+    try {
+      await dispatch(addContact(newContact));
+      setName('');
     setNumber('');
+    } catch (error) {
+      alert('Error adding contact: ' + error.message);
+    }
+
+  
   };
 
   return (
@@ -83,3 +86,13 @@ const ContactForm = () => {
 };
 
 export { ContactForm };
+  
+  
+    // const action = {
+    //   type: 'contacts/addContact',
+    //   payload: newContact,
+    // };
+    // dispatch(action);
+
+    // setName('');
+    // setNumber('');
