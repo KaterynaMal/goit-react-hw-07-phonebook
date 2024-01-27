@@ -28,13 +28,13 @@ const contactsSlice = createSlice({
   initialState: initialState,
   reducers: {
     addContact(state, action) {
-      if (!state.contacts.items) {
-        state.contacts.items = [];
+      if (!state.items) {
+        state.items = [];
       }
-      state.contacts.items.push(action.payload);
+      state.items.push(action.payload);
     },
     removeContact(state, action) {
-      state.contacts.items = state.contacts.items.filter(
+      state.items = state.items.filter(
         contact => contact.id !== action.payload
       );
     },
@@ -46,16 +46,16 @@ const contactsSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(apiGetContacts.pending, state => {
-        state.contacts.isLoading = true;
-        state.contacts.error = null;
+        state.isLoading = true;
+        state.error = null;
       })
       .addCase(apiGetContacts.fulfilled, (state, action) => {
-        state.contacts.isLoading = false;
-        state.contacts.items = action.payload;
+        state.isLoading = false;
+        state.items = action.payload;
       })
       .addCase(apiGetContacts.rejected, (state, action) => {
-        state.contacts.isLoading = false;
-        state.contacts.error = action.payload;
+        state.isLoading = false;
+        state.error = action.payload;
       });
   },
 });

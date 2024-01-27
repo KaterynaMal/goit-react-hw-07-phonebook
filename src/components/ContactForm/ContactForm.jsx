@@ -42,7 +42,11 @@ const ContactForm = () => {
     const newContact = {
       name: name.trim(),
       number: number.trim(),
+
+     
     };
+
+     console.log(newContact);
 
     dispatch(addContact(newContact));
     setName('');
