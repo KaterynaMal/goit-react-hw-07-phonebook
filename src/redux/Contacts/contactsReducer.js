@@ -7,7 +7,7 @@ export const apiGetContacts = createAsyncThunk(
     try {
       const contacts = await requestContacts();
 
-      return contacts; 
+      return contacts;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
@@ -18,7 +18,7 @@ const initialState = {
   contacts: {
     items: [],
     isLoading: false,
-    error: null
+    error: null,
   },
   filter: '',
 };
@@ -28,11 +28,10 @@ const contactsSlice = createSlice({
   initialState: initialState,
   reducers: {
     addContact(state, action) {
-      if (!state.contacts.items) {
-        state.contacts.items = [];
-      }
+      // if (!state.contacts.items) {
+      //   state.contacts.items = [];
+      // }
       state.contacts.items.push(action.payload);
-     
     },
     removeContact(state, action) {
       state.contacts.items = state.contacts.items.filter(
@@ -44,9 +43,9 @@ const contactsSlice = createSlice({
     },
   },
 
- extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(apiGetContacts.pending, (state) => {
+      .addCase(apiGetContacts.pending, state => {
         state.contacts.isLoading = true;
         state.contacts.error = null;
       })
@@ -59,7 +58,6 @@ const contactsSlice = createSlice({
         state.contacts.error = action.payload;
       });
   },
-
 });
 
 export const { addContact, removeContact, setFilter } = contactsSlice.actions;

@@ -1,6 +1,5 @@
 import React from 'react';
 
-
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../redux/Contacts/contactsReducer';
 import css from './Filter.module.css';
@@ -10,7 +9,6 @@ const Filter = () => {
   const filter = useSelector(store => store.contacts.filter);
 
   const handleFilter = e => {
-   
     dispatch(setFilter(e.target.value));
   };
 
@@ -28,7 +26,3 @@ const Filter = () => {
 };
 
 export { Filter };
-
-
-
-

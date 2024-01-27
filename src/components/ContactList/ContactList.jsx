@@ -5,11 +5,10 @@ import { removeContact } from '../../redux/Contacts/contactsReducer';
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(store => store.contacts.contacts);
+  const contacts = useSelector(store => store.contacts.items);
   const filter = useSelector(store => store.contacts.filter);
 
   const handleDeleteContact = id => {
-    
     dispatch(removeContact(id));
   };
 
