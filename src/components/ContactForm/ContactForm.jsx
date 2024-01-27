@@ -20,7 +20,9 @@ const ContactForm = () => {
     setNumber(e.target.value);
   };
 
-  const handleAddContact = () => {
+  const handleSubmit = e => {
+    e.preventDefault();
+
     if (name.trim() === '' || number.trim() === '') {
       alert('Please, enter name and phone number');
       return;
@@ -49,7 +51,7 @@ const ContactForm = () => {
 
   return (
     <div>
-      <form className={css.form}>
+      <form className={css.form} onSubmit={handleSubmit}>
         <label className={css.label}>Name</label>
         <input
           className={css.input}
@@ -70,7 +72,7 @@ const ContactForm = () => {
           onChange={handlePhoneChange}
         />
 
-        <button className={css.btn} type="button" onClick={handleAddContact}>
+        <button className={css.btn} type="submit" >
           Add contact
         </button>
       </form>
