@@ -5,7 +5,7 @@ import { removeContact } from '../../redux/Contacts/contactsReducer';
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(store => store.contacts.items);
+  const contacts = useSelector(store => store.contacts.contacts.items);
   const filter = useSelector(store => store.contacts.filter);
 
   const handleDeleteContact = id => {
@@ -14,14 +14,14 @@ const ContactList = () => {
 
   const filteredContacts = Array.isArray(contacts)
     ? contacts.filter(contact =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-      )
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    )
     : [];
 
   return (
     <div>
       <ul>
-        {Array.isArray(filter ? filteredContacts : contacts) ? (
+        {Array.isArray(filter ? filteredContacts : contacts) && 
           (filter ? filteredContacts : contacts).map(contact => (
             <li className={css.contact_item} key={contact.id}>
               {contact.name}: {contact.number}
@@ -33,13 +33,14 @@ const ContactList = () => {
                 Delete
               </button>
             </li>
-          ))
-        ) : (
-          <li>No matching contacts found</li>
-        )}
+          ))}
+        {Array.isArray(filter ? filteredContacts : contacts) &&
+          (filter ? filteredContacts : contacts).length === 0 && (
+            <li key="no-matching-contacts">No matching contacts found</li>
+          )}
       </ul>
     </div>
   );
-};
+}
 
 export { ContactList };
