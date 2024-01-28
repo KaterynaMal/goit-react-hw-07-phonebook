@@ -10,7 +10,7 @@ const ContactForm = () => {
   const [number, setNumber] = useState('');
 
   const dispatch = useDispatch();
-  const contacts = useSelector(store => store.contacts.items);
+  const contacts = useSelector(store => store.contacts.items) || [];
 
   const handleNameChange = e => {
     setName(e.target.value);
@@ -28,9 +28,11 @@ const ContactForm = () => {
       return;
     }
 
-    const isNameExist = contacts.some(
-      contact => contact.name.toLowerCase() === name.trim().toLowerCase()
-    );
+    const isNameExist = Array.isArray(contacts)
+      ? contacts.some(
+          contact => contact.name.toLowerCase() === name.trim().toLowerCase()
+        )
+      : false;
       
 
     if (isNameExist) {
