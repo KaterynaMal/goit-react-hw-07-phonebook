@@ -36,7 +36,9 @@ const ContactList = () => {
           ))}
         {Array.isArray(filter ? filteredContacts : contacts) &&
           (filter ? filteredContacts : contacts).length === 0 && (
-            <li key="no-matching-contacts">No matching contacts found</li>
+          <li
+           key="no-matching-contacts"
+          >No matching contacts found</li>
           )}
       </ul>
     </div>
