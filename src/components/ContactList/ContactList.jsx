@@ -12,17 +12,15 @@ const ContactList = () => {
     dispatch(removeContact(id));
   };
 
-  const filteredContacts = Array.isArray(contacts)
-    ? contacts.filter(contact =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
-    )
-    : [];
+  const filteredContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
     <div>
       <ul>
-        {Array.isArray(filter ? filteredContacts : contacts) && 
-          (filter ? filteredContacts : contacts).map(contact => (
+        {filteredContacts.length > 0 ? (
+          filteredContacts.map(contact => (
             <li className={css.contact_item} key={contact.id}>
               {contact.name}: {contact.number}
               <button
@@ -33,16 +31,13 @@ const ContactList = () => {
                 Delete
               </button>
             </li>
-          ))}
-        {Array.isArray(filter ? filteredContacts : contacts) &&
-          (filter ? filteredContacts : contacts).length === 0 && (
-          <li
-           key="no-matching-contacts"
-          >No matching contacts found</li>
-          )}
+          ))
+        ) : (
+          <li key="no-matching-contacts">No matching contacts found</li>
+        )}
       </ul>
     </div>
   );
-}
+};
 
 export { ContactList };
