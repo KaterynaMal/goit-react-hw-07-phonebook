@@ -20,7 +20,7 @@ const ContactForm = () => {
     setNumber(e.target.value);
   };
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     if (name.trim() === '' || number.trim() === '') {
@@ -47,11 +47,19 @@ const ContactForm = () => {
      
     };
 
-     console.log(newContact);
+    //  console.log(newContact);
 
-    dispatch(addContact(newContact));
-    setName('');
-    setNumber('');
+    
+    try {
+      await dispatch(addContact(newContact));
+      setName('');
+      setNumber('');
+
+    } catch (error) {
+       console.error('Failed to add contact:', error);
+    }
+    
+    
   };
 
   return (

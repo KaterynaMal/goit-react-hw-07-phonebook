@@ -1,15 +1,20 @@
 import React from 'react';
 import css from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeContact } from '../../redux/Contacts/contactsReducer';
+import { deleteContact } from '../../redux/Contacts/contactsReducer';
 
 const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(store => store.contacts.items);
   const filter = useSelector(store => store.contacts.filter);
 
-  const handleDeleteContact = id => {
-    dispatch(removeContact(id));
+  const handleDeleteContact = async id => {
+    try {
+      await dispatch(deleteContact(id));
+    } catch (error) {
+      console.error('Failed to remove contact:', error);
+    }
+    
   };
 
   const filteredContacts = Array.isArray(contacts)
