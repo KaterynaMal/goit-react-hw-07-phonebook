@@ -1,75 +1,31 @@
-import React, { useEffect, useState } from 'react';
-
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/Contacts/contactsReducer';
+import { addContact } from 'services/api';
 
 import css from './ContactForm.module.css';
 
 const ContactForm = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
-
   const dispatch = useDispatch();
-  const contacts = useSelector(store => store.contacts.items) || [];
+  const contacts = useSelector(store => store.contacts.items).map(
+    contact => contact.name
+  );
 
-  useEffect(() => {
-    dispatch(addContact());
-}, [dispatch]);
+  const handleSubmit = evt => {
+    evt.preventDefault();
+    const newName = evt.currentTarget.elements.name.value;
 
-  // const name = useSelector(store => store.contacts.name);
-  // const number = useSelector(store => store.contacts.number);
-
-  const handleNameChange = e => {
-    setName(e.target.value);
-  };
-
-  const handlePhoneChange = e => {
-    setNumber(e.target.value);
-  };
-
-  const handleSubmit = async e => {
-    e.preventDefault();
-
-    if (name.trim() === '' || number.trim() === '') {
-      alert('Please, enter name and phone number');
-      return;
+    if (!contacts.some(name => name.toLowerCase() === newName.toLowerCase())) {
+      const newNumb = evt.currentTarget.elements.number.value;
+      const newContact = {
+        name: newName,
+        phone: newNumb,
+      };
+      dispatch(addContact(newContact));
+      evt.currentTarget.reset();
+    } else {
+      alert(`${newName} is already in contacts.`);
     }
-
-    const isNameExist = Array.isArray(contacts)
-      ? contacts.some(
-          contact => contact.name.toLowerCase() === name.trim().toLowerCase()
-        )
-      : false;
-      
-
-    if (isNameExist) {
-      alert(`${name} is already in contacts`);
-      return;
-    }
-
-    const newContact = {
-      name: name.trim(),
-      number: number.trim(),
-
-     
-    };
-
-    //  console.log(newContact);
-
-    
-    try {
-      await dispatch(addContact(newContact));
-      setName('');
-      setNumber('');
-
-    } catch (error) {
-       console.error('Failed to add contact:', error);
-    }
-    
-    
   };
-
-
 
   return (
     <div>
@@ -80,8 +36,8 @@ const ContactForm = () => {
           type="text"
           name="name"
           required
-          value={name}
-          onChange={handleNameChange}
+          // value={name}
+          // onChange={handleNameChange}
         />
 
         <label className={css.label}>Number</label>
@@ -90,11 +46,11 @@ const ContactForm = () => {
           type="tel"
           name="number"
           required
-          value={number}
-          onChange={handlePhoneChange}
+          // value={number}
+          // onChange={handlePhoneChange}
         />
 
-        <button className={css.btn} type="submit" >
+        <button className={css.btn} type="submit">
           Add contact
         </button>
       </form>
@@ -112,3 +68,52 @@ export { ContactForm };
 
 // setName('');
 // setNumber('');
+
+// ===========
+// useEffect(() => {
+//     const newContact = {
+//     name: name.trim(),
+//     number: number.trim(),
+//   };
+//   dispatch(addContact(newContact));
+// }, [dispatch]);
+
+// // const name = useSelector(store => store.contacts.name);
+// // const number = useSelector(store => store.contacts.number);
+
+// const handleNameChange = e => {
+//   setName(e.target.value);
+// };
+
+// const handlePhoneChange = e => {
+//   setNumber(e.target.value);
+// };
+
+// const handleSubmit = async e => {
+//   e.preventDefault();
+
+//   if (name.trim() === '' || number.trim() === '') {
+//     alert('Please, enter name and phone number');
+//     return;
+//   }
+
+//   const isNameExist = Array.isArray(contacts)
+//     ? contacts.some(
+//         contact => contact.name.toLowerCase() === name.trim().toLowerCase()
+//       )
+//     : false;
+
+//   if (isNameExist) {
+//     alert(`${name} is already in contacts`);
+//     return;
+//   }
+
+//  console.log(newContact);
+
+// try {
+//   await dispatch(addContact(newContact));
+//   setName('');
+//   setNumber('');
+// } catch (error) {
+//   console.error('Failed to add contact:', error);
+// }

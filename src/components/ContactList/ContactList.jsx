@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react';
 import css from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { apiGetContacts, deleteContact } from '../../redux/Contacts/contactsReducer';
+import { apiGetContacts, deleteContact } from 'services/api';
 
 const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(store => store.contacts.items);
-  const filter = useSelector(store => store.contacts.filter);
+  const filter = useSelector(store => store.filter);
 
   useEffect(() => {
     dispatch(apiGetContacts());
-  }, [dispatch]);
-
-    useEffect(() => {
-    dispatch(deleteContact());
   }, [dispatch]);
 
   const handleDeleteContact = async id => {
@@ -22,7 +18,6 @@ const ContactList = () => {
     } catch (error) {
       console.error('Failed to remove contact:', error);
     }
-    
   };
 
   const filteredContacts = Array.isArray(contacts)
@@ -58,9 +53,6 @@ const ContactList = () => {
 
 export { ContactList };
 
-
-
-
 // import React from 'react';
 // import css from './ContactList.module.css';
 // import { useDispatch, useSelector } from 'react-redux';
@@ -84,7 +76,7 @@ export { ContactList };
 //   return (
 //     <div>
 //       <ul>
-//          {Array.isArray(filter ? filteredContacts : contacts) && 
+//          {Array.isArray(filter ? filteredContacts : contacts) &&
 //           (filter ? filteredContacts : contacts).map(contact => (
 //             {
 //               filteredContacts.length > 0 ? (
@@ -110,3 +102,11 @@ export { ContactList };
 // };
 
 // export { ContactList };
+
+//   useEffect(() => {
+//     if (contacts && contacts.length > 0) {
+// const contactId = contacts[0].id;
+//     dispatch(deleteContact(contactId));
+//     }
+
+//   }, [dispatch, contacts]);

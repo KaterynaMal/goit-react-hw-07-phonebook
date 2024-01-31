@@ -1,20 +1,16 @@
 import React from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { setFilter } from '../../redux/Contacts/contactsReducer';
+import { setFilter } from '../../redux/Filter/filterSlice';
 import css from './Filter.module.css';
 
 const Filter = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(store => store.contacts.filter);
-
-  // useEffect(() => {
-  //   dispatch()
-  // })
+  const filter = useSelector(store => store.filter);
 
   const handleFilter = e => {
+    e.preventDefault();
     dispatch(setFilter(e.target.value));
-    // setFilter();
   };
 
   return (
