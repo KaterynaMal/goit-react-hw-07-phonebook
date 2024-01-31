@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { setFilter } from '../../redux/Contacts/contactsReducer';
@@ -8,8 +8,13 @@ const Filter = () => {
   const dispatch = useDispatch();
   const filter = useSelector(store => store.contacts.filter);
 
+  // useEffect(() => {
+  //   dispatch()
+  // })
+
   const handleFilter = e => {
     dispatch(setFilter(e.target.value));
+    // setFilter();
   };
 
   return (

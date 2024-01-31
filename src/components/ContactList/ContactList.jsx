@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import css from './ContactList.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteContact } from '../../redux/Contacts/contactsReducer';
+import { apiGetContacts, deleteContact } from '../../redux/Contacts/contactsReducer';
 
 const ContactList = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(store => store.contacts.items);
   const filter = useSelector(store => store.contacts.filter);
+
+  useEffect(() => {
+    dispatch(apiGetContacts());
+  }, [dispatch]);
+
+    useEffect(() => {
+    dispatch(deleteContact());
+  }, [dispatch]);
 
   const handleDeleteContact = async id => {
     try {

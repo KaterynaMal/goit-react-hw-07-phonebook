@@ -27,7 +27,7 @@ export const addContact = createAsyncThunk(
 );
 
 export const deleteContact = createAsyncThunk(
-  'contacts/deleteContactApi',
+  'contacts/deleteContact',
   async (contactId, thunkApi) => {
     try {
       await deleteContactApi(contactId);
@@ -38,16 +38,20 @@ export const deleteContact = createAsyncThunk(
   }
 );
 
-export const setFilter = createAction('contacts/setFilter');
+// export const setFilter = createAction('contacts/setFilter');
+
+const initialState = {
+  contacts: {
+    items: [],
+    isLoading: false,
+    error: null
+  },
+  filter: ""
+}
 
 const contactsSlice = createSlice({
   name: 'contacts',
-  initialState: {
-    items: [],
-    isLoading: false,
-    error: null,
-    filter: '',
-  },
+  initialState,
   reducers: {
     setFilter(state, action) {
       state.filter = action.payload;
@@ -55,35 +59,37 @@ const contactsSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(requestContacts.pending, state => {
+      .addCase(apiGetContacts.pending, state => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(requestContacts.fulfilled, (state, action) => {
+      .addCase(apiGetContacts.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items = action.payload;
       })
-      .addCase(requestContacts.rejected, (state, action) => {
+      .addCase(apiGetContacts.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message;
+        state.error = action.payload;
       })
       .addCase(addContact.pending, state => {
         state.isLoading = true;
         state.error = null;
+      
       })
       .addCase(addContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items.push(action.payload);
+        state.items = action.payload;
       })
       .addCase(addContact.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message;
+        state.error = action.payload;
       })
-      .addCase(deleteContactApi.pending, state => {
+      .addCase(deleteContact.pending, state => {
         state.isLoading = true;
         state.error = null;
       })
-      .addCase(deleteContactApi.fulfilled, (state, action) => {
+      .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.items = state.items.filter(
           contact => contact.id !== action.payload
@@ -91,11 +97,13 @@ const contactsSlice = createSlice({
       })
       .addCase(deleteContactApi.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action.error.message;
+        state.error = action.payload;
+        // .error.message
       });
   },
 });
 
+export const { setFilter } = contactsSlice.action;
 export const contactsReducer = contactsSlice.reducer;
 
 // export const contactsReducer = contactsSlice.reducer;

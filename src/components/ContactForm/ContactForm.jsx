@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from '../../redux/Contacts/contactsReducer';
@@ -11,6 +11,13 @@ const ContactForm = () => {
 
   const dispatch = useDispatch();
   const contacts = useSelector(store => store.contacts.items) || [];
+
+  useEffect(() => {
+    dispatch(addContact());
+}, [dispatch]);
+
+  // const name = useSelector(store => store.contacts.name);
+  // const number = useSelector(store => store.contacts.number);
 
   const handleNameChange = e => {
     setName(e.target.value);
@@ -61,6 +68,8 @@ const ContactForm = () => {
     
     
   };
+
+
 
   return (
     <div>
