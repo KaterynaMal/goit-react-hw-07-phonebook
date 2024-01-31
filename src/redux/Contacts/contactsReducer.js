@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import { requestContacts, createContact, deleteContactApi } from 'services/api';
 
 export const apiGetContacts = createAsyncThunk(
