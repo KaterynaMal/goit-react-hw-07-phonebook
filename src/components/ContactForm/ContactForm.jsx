@@ -6,15 +6,17 @@ import css from './ContactForm.module.css';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-  // const contactsName = useSelector(store => store.contacts.items).map(
-    // contact => contact.name);
-  const contactsName = useSelector(store => store.contacts ? store.contacts.items.map(contact => contact.name) : []);
+  const contactsName = useSelector(store => store.contacts.items);
+  // const contactsName = useSelector(store => store.contacts ? store.contacts.items.map(contact => contact.name) : []);
   
+// const contactsName = useSelector(store => Array.isArray(store.contacts.items) ? store.contacts.items.map(contact => contact.name) : []);
+
   const handleSubmit = e => {
     e.preventDefault();
     const newName = e.currentTarget.elements.name.value;
 
-    if (!contactsName.some(name => name.toLowerCase() === newName.toLowerCase())) {
+    if (!contactsName.map(
+    contact => contact.name).some(name => name.toLowerCase() === newName.toLowerCase())) {
       const newNumb = e.currentTarget.elements.number.value;
       const newContact = {
         name: newName,

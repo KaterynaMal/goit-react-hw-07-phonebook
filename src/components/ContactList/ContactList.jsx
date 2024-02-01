@@ -5,12 +5,18 @@ import { apiGetContacts, deleteContact } from 'services/api';
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(store => store.contacts.items);
-  const filter = useSelector(store => store.filter);
+  const allContacts = useSelector(store => store.contacts.items);
+  const filter = useSelector(store => store.contacts.filter);
 
   useEffect(() => {
     dispatch(apiGetContacts());
   }, [dispatch]);
+
+  const filteredContacts = allContacts.filter(contact =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
+  
+    
 
   const handleDeleteContact = async id => {
     try {
@@ -20,17 +26,12 @@ const ContactList = () => {
     }
   };
 
-  const filteredContacts = Array.isArray(contacts)
-    ? contacts.filter(contact =>
-        contact.name.toLowerCase().includes(filter.toLowerCase())
-      )
-    : [];
+ 
 
   return (
     <div>
       <ul>
-        {Array.isArray(filter ? filteredContacts : contacts) &&
-          (filter ? filteredContacts : contacts).map(contact => (
+        {filteredContacts.length > 0 ? (filteredContacts.map(contact => (
             <li className={css.contact_item} key={contact.id}>
               {contact.name}: {contact.number}
               <button
@@ -41,9 +42,9 @@ const ContactList = () => {
                 Delete
               </button>
             </li>
-          ))}
-        {Array.isArray(filter ? filteredContacts : contacts) &&
-          (filter ? filteredContacts : contacts).length === 0 && (
+        ))
+        ) : (
+        
             <li>No matching contacts found</li>
           )}
       </ul>
