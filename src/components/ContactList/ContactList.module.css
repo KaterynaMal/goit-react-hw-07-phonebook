@@ -1,7 +1,19 @@
+.phoneList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .contact_item {
   display: flex;
+  width: 380px;
+  justify-content: space-between;
   gap: 15px;
   align-items: center;
+}
+
+.contact_item:hover {
+  text-decoration: underline;
 }
 
 .delete_btn {

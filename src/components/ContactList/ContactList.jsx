@@ -25,7 +25,7 @@ const ContactList = () => {
 
   return (
     <div>
-      <ul>
+      <ul className={css.phoneList}>
         {filteredContacts.length > 0 ? (
           filteredContacts.map(contact => (
             <li className={css.contact_item} key={contact.id}>
