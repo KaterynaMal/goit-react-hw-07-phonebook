@@ -2,15 +2,22 @@ import { createSlice } from '@reduxjs/toolkit';
 import { apiGetContacts, addContact, deleteContact } from 'services/api';
 
 const initialState = {
-  items: [],
+  contacts: {
+items: [],
   isLoading: false,
   error: null,
+  },
+  filter: '',
 };
 
 const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
-  reducers: {},
+  reducers: {
+    setFilter(state, action) {
+      state.filter = action.payload;
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(apiGetContacts.pending, state => {

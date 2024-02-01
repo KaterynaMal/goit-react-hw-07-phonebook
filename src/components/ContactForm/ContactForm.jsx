@@ -6,22 +6,22 @@ import css from './ContactForm.module.css';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(store => store.contacts.items).map(
-    contact => contact.name
-  );
+  // const contactsName = useSelector(store => store.contacts.items).map(
+    // contact => contact.name);
+  const contactsName = useSelector(store => store.contacts ? store.contacts.items.map(contact => contact.name) : []);
+  
+  const handleSubmit = e => {
+    e.preventDefault();
+    const newName = e.currentTarget.elements.name.value;
 
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    const newName = evt.currentTarget.elements.name.value;
-
-    if (!contacts.some(name => name.toLowerCase() === newName.toLowerCase())) {
-      const newNumb = evt.currentTarget.elements.number.value;
+    if (!contactsName.some(name => name.toLowerCase() === newName.toLowerCase())) {
+      const newNumb = e.currentTarget.elements.number.value;
       const newContact = {
         name: newName,
         phone: newNumb,
       };
       dispatch(addContact(newContact));
-      evt.currentTarget.reset();
+      e.currentTarget.reset();
     } else {
       alert(`${newName} is already in contacts.`);
     }
