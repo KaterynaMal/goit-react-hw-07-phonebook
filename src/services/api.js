@@ -24,56 +24,20 @@ export const addContact = createAsyncThunk(
       const contactData = await instance.post('/contacts', newContact);
       console.log(contactData);
       return contactData.data;
-      
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
   }
- 
 );
 
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
   async (contactId, thunkApi) => {
     try {
-      const result = await instance.delete(`/contacts/${contactId}`);
-      return result.data;
+      await instance.delete(`/contacts/${contactId}`);
+      return contactId;
     } catch (error) {
       return thunkApi.rejectWithValue(error.message);
     }
   }
 );
-
-// export const requestContacts = createAsyncThunk(
-//   'contacts/requestContacts',
-//   async () => {
-//     const { data } = await instance.get('/contacts');
-//     return data;
-//   }
-// );
-
-// export const createContact = createAsyncThunk(
-//   'contacts/createContact',
-//   async (contactData) => {
-//     const { data } = await instance.post('/contacts', contactData);
-//     return data;
-//   }
-// );
-
-// export const deleteContactApi = createAsyncThunk(
-//   'contacts/deleteContactApi',
-//   async (contactId) => {
-//     await instance.delete(`/contacts/${contactId}`);
-//     return contactId;
-//   }
-// );
-
-// export const requestPostDetailsById = async postId => {
-//   const { data } = await instance.get(`/posts/${postId}`);
-//   return data;
-// };
-
-// export const requestPostsByQuery = async searchTerm => {
-//   const { data } = await instance.get(`/posts?q=${searchTerm}`);
-//   return data;
-// };
