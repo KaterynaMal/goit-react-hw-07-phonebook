@@ -29,7 +29,7 @@ const ContactList = () => {
         {filteredContacts.length > 0 ? (
           filteredContacts.map(contact => (
             <li className={css.contact_item} key={contact.id}>
-              {contact.name}: {contact.number}
+              {contact.name}: {contact.phone}
               <button
                 type="button"
                 className={css.delete_btn}
